@@ -20,11 +20,11 @@ logging.info("Приложение запущено")
 
 
 def identify_type(a: float, b:float, c:float):
-    if a + b <= c or b + c <= a or c + a <= b:
+    if math.isclose(a + b, c) or math.isclose(b + c, a) or math.isclose(a + c, b) or a + b < c or b + c < a or a + c < b:
         return 'не треугольник'
-    if a == b == c:
+    if math.isclose(a, b) and math.isclose(b, c):
         return 'равносторонний'
-    if a == b or b == c or c == a:
+    if math.isclose(a, b) or math.isclose(b, c) or math.isclose(c, a):
         return 'равнобедренный'
     return 'разносторонний'
 
