@@ -5,7 +5,6 @@ import math
 log_format = "%(asctime)s | [%(levelname)-7s] | %(message)s"
 date_format = "%Y-%m-%d %H:%M:%S"
 
-# Базовая настройка корневого логгера
 logging.basicConfig(
     level=logging.DEBUG,
     format=log_format,
@@ -28,10 +27,6 @@ def identify_type(a: float, b:float, c:float):
     if a == b or b == c or c == a:
         return 'равнобедренный'
     return 'разносторонний'
-
-import math
-import logging
-
 
 def calculate_vertices_by_angles(a, b, c):
     cos_beta = (a*a + c*c - b*b) / (2*a*c)
@@ -75,6 +70,7 @@ def process(string1: str, string2: str, string3: str):
         return "не треугольник", [(-1, -1), (-1, -1), (-1, -1)]
 
     tri_type = identify_type(a, b, c)
+    logging.debug(f"Тип треугольника: {tri_type}")
 
     if tri_type == "не треугольник":
         logging.warning(f"Запрос обработан | параметры = {params}\n"
