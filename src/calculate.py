@@ -42,15 +42,15 @@ class CalculateTriangle:
             b = float(string2)
             c = float(string3)
         except (ValueError, TypeError):
-            return "", [(-2, -2), (-2, -2), (-2, -2)]
+            return "", [(-2, -2), (-2, -2), (-2, -2)], "Нечисловые данные"
 
         if a <= 0 or b <= 0 or c <= 0:
-            return "не треугольник", [(-1, -1), (-1, -1), (-1, -1)]
+            return "не треугольник", [(-1, -1), (-1, -1), (-1, -1)], "Стороны должны быть положительными"
 
         tri_type = self.identify_type(a, b, c)
 
         if tri_type == "не треугольник":
-            return tri_type, [(-1, -1), (-1, -1), (-1, -1)]
+            return tri_type, [(-1, -1), (-1, -1), (-1, -1)], "Условие треугольника не выполнено"
 
         vertices = self.calculate_vertices_by_angles(a, b, c)
-        return tri_type, vertices
+        return tri_type, vertices, ""

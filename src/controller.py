@@ -1,4 +1,4 @@
-from calculate import CalculateTriangle
+from src.calculate import CalculateTriangle
 from database import DatabaseTriangle
 from user_interface import AbstractUserInterface
 from external_service import AbstractExternalService
