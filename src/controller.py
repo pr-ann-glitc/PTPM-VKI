@@ -1,7 +1,9 @@
+from email import message
+
 from src.calculate import CalculateTriangle
-from database import DatabaseTriangle
-from user_interface import AbstractUserInterface
-from external_service import AbstractExternalService
+from src.database import DatabaseTriangle
+from src.user_interface import AbstractUserInterface
+from src.external_service import AbstractExternalService
 
 class TriangleController:
     def __init__(self,
@@ -14,7 +16,7 @@ class TriangleController:
         self.console = console
         self.external = external
 
-    def process(self):
+    def process(self, message: str = ""):
         s1 = self.console.get_input("Сторона 1: ")
         s2 = self.console.get_input("Сторона 2: ")
         s3 = self.console.get_input("Сторона 3: ")
@@ -26,7 +28,6 @@ class TriangleController:
                 "type": "",
                 "vertices": [],
                 "error": "Нечисловые данные",
-                "source": "calculation"
             }
             self.console.show_result(f"Ошибка: {result['error']}")
             self.external.send(f"Ошибка: {result['error']}")
@@ -37,8 +38,8 @@ class TriangleController:
                 "type": cached["type"],
                 "vertices": [],
                 "error": cached["exception"] or "",
-                "source": "database"
             }
+            message = "Такая запись уже есть в БД"
         else:
             tri_type, vertices, error = self.calculator.process(s1, s2, s3)
             self.database.add(a, b, c, tri_type, error)
@@ -46,7 +47,6 @@ class TriangleController:
                 "type": tri_type,
                 "vertices": vertices,
                 "error": error,
-                "source": "calculation"
             }
         message = f"Тип: {result['type']}; Ошибка: {result['error']}"
         self.external.send(message)
