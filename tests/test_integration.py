@@ -26,7 +26,7 @@ class ImitationService(AbstractExternalService):
 
 class TestTriangleCalculation(unittest.TestCase):
     def test_full_to_db(self):
-        db = DatabaseTriangle("triangle.db")
+        db = DatabaseTriangle(":memory:")
         console = ImitationUserInput(["3", "4", "5"])
         external = ImitationService()
         controller = TriangleController(CalculateTriangle(), db, console, external)
@@ -39,7 +39,7 @@ class TestTriangleCalculation(unittest.TestCase):
         db.close()
 
     def test_no_triangle(self):
-        db = DatabaseTriangle("triangle.db")
+        db = DatabaseTriangle(":memory:")
         console = ImitationUserInput(["1", "4", "5"])
         external = ImitationService()
         controller = TriangleController(CalculateTriangle(), db, console, external)
@@ -52,7 +52,7 @@ class TestTriangleCalculation(unittest.TestCase):
         db.close()
 
     def test_second_call_uses_db_cache(self):
-        db = DatabaseTriangle("triangle.db")
+        db = DatabaseTriangle(":memory:")
         external = ImitationService()
 
         console1 = ImitationUserInput(["5", "5", "5"])

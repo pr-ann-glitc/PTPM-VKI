@@ -5,16 +5,16 @@ from src.calculate import CalculateTriangle
 
 class TestDatabaseModule(unittest.TestCase):
     def setUp(self):
-        self.db = DatabaseTriangle("triangle.db")
+        self.db = DatabaseTriangle(":memory:")
 
     def tearDown(self):
         self.db.close()
 
     def test_db_add_and_get(self):
-        self.db.add(6.0, 4.0, 5.0, "разносторонний", "")
-        result = self.db.get(6.0, 4.0, 5.0)
+        self.db.add(6.0, 5.0, 5.0, "равнобедренный", "")
+        result = self.db.get(6.0, 5.0, 5.0)
         self.assertIsNotNone(result)
-        self.assertEqual(result["type"], "разносторонний")
+        self.assertEqual(result["type"], "равнобедренный")
         self.assertEqual(result["exception"], "")
 
     def test_db_delete(self):

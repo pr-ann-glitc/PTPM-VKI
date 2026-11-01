@@ -33,7 +33,7 @@ class DatabaseTriangle:
                                           ' WHERE side1 = ? AND side2 = ? AND side3 = ?',
                                           (side1, side2, side3)
         )
-        row = cursor.fetchone()
+        row = cursor.fetchone() #первая строка курсора
         return dict(row) if row else None
 
     def delete (self, side1: float, side2: float, side3: float) -> bool:

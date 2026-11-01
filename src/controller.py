@@ -1,5 +1,3 @@
-from email import message
-
 from src.calculate import CalculateTriangle
 from src.database import DatabaseTriangle
 from src.user_interface import AbstractUserInterface
@@ -39,7 +37,6 @@ class TriangleController:
                 "vertices": [],
                 "error": cached["exception"] or "",
             }
-            message = "Такая запись уже есть в БД"
         else:
             tri_type, vertices, error = self.calculator.process(s1, s2, s3)
             self.database.add(a, b, c, tri_type, error)
