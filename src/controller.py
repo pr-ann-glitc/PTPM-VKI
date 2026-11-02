@@ -14,7 +14,7 @@ class TriangleController:
         self.console = console
         self.external = external
 
-    def process(self, message: str = ""):
+    def process(self):
         s1 = self.console.get_input("Сторона 1: ")
         s2 = self.console.get_input("Сторона 2: ")
         s3 = self.console.get_input("Сторона 3: ")
