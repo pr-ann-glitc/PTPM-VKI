@@ -4,6 +4,7 @@ from src.database import DatabaseTriangle
 from src.user_interface import AbstractUserInterface
 from src.external_service import AbstractExternalService
 from src.calculate import CalculateTriangle
+from unittest.mock import MagicMock
 
 
 class ImitationUserInput(AbstractUserInterface):
@@ -51,20 +52,33 @@ class TestTriangleCalculation(unittest.TestCase):
 
         db.close()
 
+
     def test_second_call_uses_db_cache(self):
         db = DatabaseTriangle(":memory:")
         external = ImitationService()
 
+        calculator = MagicMock()
+        calculator.process.return_value = (
+            "равносторонний",
+            [(0, 0), (50, 0), (25, 43)],
+            ""
+        )
+
         console1 = ImitationUserInput(["5", "5", "5"])
-        controller1 = TriangleController(CalculateTriangle(), db, console1, external)
+        controller1 = TriangleController(calculator, db, console1, external)
         result1 = controller1.process()
 
         self.assertEqual(result1["type"], "равносторонний")
+        calculator.process.assert_called_once_with("5", "5", "5")
+
+        calculator.reset_mock()
 
         console2 = ImitationUserInput(["5", "5", "5"])
-        controller2 = TriangleController(CalculateTriangle(), db, console2, external)
+        controller2 = TriangleController(calculator, db, console2, external)
         result2 = controller2.process()
 
         self.assertEqual(result2["type"], "равносторонний")
+        calculator.process.assert_not_called()
+
         self.assertEqual(len(external.sent), 2)
         db.close()
